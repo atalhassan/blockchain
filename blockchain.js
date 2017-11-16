@@ -6,7 +6,9 @@ module.exports = class Blockchain {
   }
 
   createFirstBlock(){
-    return new Block(0, Date.now(), "first Block" ,0);
+    var newBlock = new Block(0, Date.now(), "first Block" , 0);
+    newBlock.startMining();
+    return newBlock;
   }
 
   getLatestBlock() {
@@ -15,7 +17,26 @@ module.exports = class Blockchain {
 
   addBlock(newBlock) {
     newBlock.prevHash = this.getLatestBlock().hash;
-    newBlock.hash = newBlock.calculateHash();
+    newBlock.startMining();
     this.chain.push(newBlock);
   }
+
+  isValid(){
+    for (var i = 1; i < this.chain.length; i++) {
+      var currBlock = this.chain[i];
+      var prevBlock = this.chain[i-1];
+
+      //case 1 check if currBlock is valid
+      if(currBlock.hash !== currBlock.calculateHash()){
+        return false;
+      }
+
+      //case 2 check if currBlock is linked correctly
+      if (currBlock.prevHash !== prevBlock.hash) {
+        return false;
+      }
+    }
+    return true;
+  }
+
 }
