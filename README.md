@@ -2,4 +2,7 @@
 Simple blockchain algorithm
 
 ## To run
-``` node index.js ```
+``` 
+npm install
+node index.js 
+```
