@@ -10,7 +10,9 @@
       This is NOT a valid blockchain
     </div>
   <%}%>
-  <% blockchain.forEach(function(block){ %>
+  <%var chain = blockchain.slice()%>
+  <%chain.reverse()%>
+  <% chain.forEach(function(block){ %>
     <div class="block">
       <h3 class"label"> Index: <%= block.index %> </h1>
       <h5 class"label"> Time Created: <%=  moment(parseInt(block.timestamp)) %> </h5>
