@@ -17,7 +17,7 @@ app.set("view engine", "ejs");
 
 
 
-mongoose.connect("mongodb://localhost/mydb", {useMongoClient: true});
+mongoose.connect(process.env.DATABASEURL, {useMongoClient: true});
 
 app.get("/", function(req, res) {
   BlockModel.find({},function(err, allBlocks) {
@@ -86,6 +86,6 @@ app.post("/new", function(req, res) {
 // ===================
 // App listner
 // ===================
-app.listen(3000,function(){
+app.listen(process.env.PORT, process.env.IP,function(){
   console.log("Blockchian server is up...");
 });
