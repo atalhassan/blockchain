@@ -17,7 +17,7 @@ module.exports = class Block {
   startMining(){
     this.hash = this.calculateHash()
     console.log("Mining block " +this.index + "... ")
-    while(this.hash.substring(0,5) !== "12345"){
+    while(this.hash.substring(0,2) !== "12"){
       this.salt++;
       this.hash = this.calculateHash()
     }

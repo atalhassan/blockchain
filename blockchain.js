@@ -6,7 +6,7 @@ module.exports = class Blockchain {
   }
 
   createFirstBlock(){
-    var newBlock = new Block(0, Date.now(), "first Block" , 0);
+    var newBlock = new Block(0, Date.now(), {Message: "first Block"} , 0);
     newBlock.startMining();
     return newBlock;
   }

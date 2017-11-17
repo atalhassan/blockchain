@@ -1,0 +1,34 @@
+<% include partials/header %>
+
+<div class="container" >
+  <%if(valid){%>
+    <div class="alert alert-success" role="alert">
+      This is a valid blockchain
+    </div>
+  <%} else {%>
+    <div class="alert alert-danger" role="alert">
+      This is NOT a valid blockchain
+    </div>
+  <%}%>
+  <% blockchain.forEach(function(block){ %>
+    <div class="block">
+      <h3 class"label"> Index: <%= block.index %> </h1>
+      <h5 class"label"> Time: <%= Date(parseInt(block.timestamp)) %> </h5>
+      <h5 class"label"> Details:  </h5>
+      <ul>
+        <% for(var key in block.data) { %>
+        <li><%=key%>: <%= block.data[key] %></li>
+      <%}%>
+      </ul>
+      <h5 class"label"> Previous Hash: <%= block.prevHash %> </h5>
+      <h5 class"label"> Hash: <%= block.hash %> </h5>
+
+    </div>
+  <% }); %>
+
+
+</div>
+
+
+
+<% include partials/footer %>
