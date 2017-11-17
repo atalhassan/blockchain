@@ -33,7 +33,8 @@ app.get("/", function(req, res) {
 app.get("/new", function(req, res) {
   var lastBlock = myChain.getLatestBlock();
   var newBlock = new Block(lastBlock.index + 1, Date.now(), {}, lastBlock.hash);
-  res.render("new", {newBlock:newBlock, prevHash: lastBlock.hash});
+
+  res.render("new", {newBlock:newBlock, key: newBlock.key, length: newBlock.length});
 })
 
 
@@ -86,6 +87,6 @@ app.post("/new", function(req, res) {
 // ===================
 // App listner
 // ===================
-app.listen(process.env.PORT, process.env.IP,function(){
+app.listen(3000,function(){
   console.log("Blockchian server is up...");
 });

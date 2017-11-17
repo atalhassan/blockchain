@@ -4,15 +4,15 @@
   <form action="/new" method="POST" id="myForm">
     <div class="form-group">
       <label for="Data_Message">Message</label>
-      <input name="message" type="text" class="form-control" id="Data_Message"  placeholder="message..." >
+      <input name="message" id="message" type="text" class="form-control" id="Data_Message"  placeholder="message..." required>
     </div>
     <div class="form-group">
       <label for="Data_To">To</label>
-      <input name="to" type="text" class="form-control" id="Data_To" placeholder="Alex" >
+      <input name="to" id="to" type="text" class="form-control" id="Data_To" placeholder="Alex" required>
     </div>
     <div class="form-group">
       <label for="Data_From">From</label>
-      <input name="from" type="text" class="form-control" id="Data_From" placeholder="Mack" >
+      <input name="from" id="from" type="text" class="form-control" id="Data_From" placeholder="Mack" required>
 
       <input name="index" id="index" type="hidden" >
       <input name="timestamp" id="timestamp"  type="hidden" >
@@ -20,35 +20,52 @@
       <input name="prevHash" id="prevHash"  type="hidden" >
       <input name="salt" id="salt"  type="hidden" >
       <input name="val" id="val"  type="hidden" >
+      <br>
+      <div class="alert" role="alert" id="hash_alert">
 
+      </div>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+
+    <button type="button" class="btn btn-warning" id="clac_hash">Calculate valid hash</button>
+    <button type="submit" class="btn btn-primary" id="formSubmit">Submit</button>
   </form>
   <br>
-  <div class="alert" role="alert" id="hash">
 
-  </div>
 </div>
 
 <script type="text/javascript" src="./bower_components/crypto-js/crypto-js.js"></script>
 <script src="js/blockchain.js" async></script>
 <script>
+var newBlock;
 
-$('#myForm').on('submit', function(e){
-    var data = {message: e.target.Data_Message.value, to: e.target.Data_To.value, from: e.target.Data_From.value}
-    var newBlock = new Block(<%= newBlock.index %>, Date.now(), data);
-    newBlock.prevHash = <%- JSON.stringify(prevHash)%>
-    alert("Mining will start, may take few minutes");
-    $('html').css('cursor','progress');
-    newBlock.startMining();
-    $('html').css('cursor','auto');
-    alert("Mining Done");
-    $("#index").val(newBlock.index);
-    $("#timestamp").val(newBlock.timestamp);
-    $("#hash").val(newBlock.hash);
-    $("#prevHash").val(newBlock.prevHash);
-    $("#salt").val(newBlock.salt);
-    $("#val").val(newBlock.hashed());
+$("#formSubmit").hide()
+function startMining() {
+    newBlock.hash = newBlock.calculateHash()
+    $("#hash_alert").html("Mining hash (This may take a while): " + newBlock.hash)
+    if(newBlock.hash.substring(0,<%=length%>) !== <%-JSON.stringify(key)%>){
+      $("#hash_alert").addClass("alert-warning")
+      newBlock.salt++;
+    } else {
+      $("#hash_alert").removeClass("alert-warning")
+      $("#hash_alert").addClass("alert-success")
+      $("#hash_alert").html("Mining Done: " + newBlock.hash)
+      $("#index").val(newBlock.index);
+      $("#timestamp").val(newBlock.timestamp);
+      $("#hash").val(newBlock.hash);
+      $("#prevHash").val(newBlock.prevHash);
+      $("#salt").val(newBlock.salt);
+      $("#val").val(newBlock.hashed());
+      $("#formSubmit").show()
+      clearInterval()
+    }
+}
+
+
+$('#clac_hash').on('click', function(){
+    var data = {message: $("#message").val(), to:$("#to").val(), from: $("#from").val()}
+    newBlock = new Block(<%= newBlock.index %>, Date.now(), data);
+    newBlock.prevHash = <%- JSON.stringify(newBlock.hash)%>
+    setInterval(startMining, 0);
 });
 </script>
 

@@ -9,6 +9,8 @@ module.exports = class Block {
     this.prevHash = prevHash;
     this.salt = salt;
     this.hash = hash;
+    this.key = "00";
+    this.length = this.key.length;
   }
 
   calculateHash() {
@@ -22,7 +24,7 @@ module.exports = class Block {
   startMining(){
     this.hash = this.calculateHash()
     console.log("Mining block " + this.index + "... ")
-    while(this.hash.substring(0,5) !== "12345"){
+    while(this.hash.substring(0,this.length ) !== this.key){
       this.salt++;
       this.hash = this.calculateHash()
     }
