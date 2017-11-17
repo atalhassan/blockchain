@@ -6,4 +6,4 @@ Simple blockchain algorithm
 npm install
 node index.js
 ```
-Then visit [localhost:3000](localhost:3000)
+Then visit [localhost:3000]

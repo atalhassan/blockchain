@@ -1,0 +1,56 @@
+<% include partials/header %>
+
+<div class="container" >
+  <form action="/new" method="POST" id="myForm">
+    <div class="form-group">
+      <label for="Data_Message">Message</label>
+      <input name="message" type="text" class="form-control" id="Data_Message"  placeholder="message..." >
+    </div>
+    <div class="form-group">
+      <label for="Data_To">To</label>
+      <input name="to" type="text" class="form-control" id="Data_To" placeholder="Alex" >
+    </div>
+    <div class="form-group">
+      <label for="Data_From">From</label>
+      <input name="from" type="text" class="form-control" id="Data_From" placeholder="Mack" >
+
+      <input name="index" id="index" type="hidden" >
+      <input name="timestamp" id="timestamp"  type="hidden" >
+      <input name="hash" id="hash"  type="hidden" >
+      <input name="prevHash" id="prevHash"  type="hidden" >
+      <input name="salt" id="salt"  type="hidden" >
+      <input name="val" id="val"  type="hidden" >
+
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+  <br>
+  <div class="alert" role="alert" id="hash">
+
+  </div>
+</div>
+
+<script type="text/javascript" src="./bower_components/crypto-js/crypto-js.js"></script>
+<script src="js/blockchain.js" async></script>
+<script>
+
+$('#myForm').on('submit', function(e){
+    var data = {message: e.target.Data_Message.value, to: e.target.Data_To.value, from: e.target.Data_From.value}
+    var newBlock = new Block(<%= newBlock.index %>, Date.now(), data);
+    newBlock.prevHash = <%- JSON.stringify(prevHash)%>
+    alert("Mining will start, may take few minutes");
+    $('html').css('cursor','progress');
+    newBlock.startMining();
+    $('html').css('cursor','auto');
+    alert("Mining Done");
+    $("#index").val(newBlock.index);
+    $("#timestamp").val(newBlock.timestamp);
+    $("#hash").val(newBlock.hash);
+    $("#prevHash").val(newBlock.prevHash);
+    $("#salt").val(newBlock.salt);
+    $("#val").val(newBlock.hashed());
+});
+</script>
+
+
+<% include partials/footer %>

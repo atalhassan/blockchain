@@ -13,12 +13,12 @@
   <% blockchain.forEach(function(block){ %>
     <div class="block">
       <h3 class"label"> Index: <%= block.index %> </h1>
-      <h5 class"label"> Time: <%= Date(parseInt(block.timestamp)) %> </h5>
+      <h5 class"label"> Time Created: <%=  moment(parseInt(block.timestamp)) %> </h5>
       <h5 class"label"> Details:  </h5>
       <ul>
-        <% for(var key in block.data) { %>
-        <li><%=key%>: <%= block.data[key] %></li>
-      <%}%>
+        <li> From: <%= block.data.from %></li>
+        <li> To: <%= block.data.to %></li>
+        <li> Message: <%= block.data.message %></li>
       </ul>
       <h5 class"label"> Previous Hash: <%= block.prevHash %> </h5>
       <h5 class"label"> Hash: <%= block.hash %> </h5>
