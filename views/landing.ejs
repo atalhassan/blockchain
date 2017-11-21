@@ -13,7 +13,7 @@
   <%var chain = blockchain.slice()%>
   <%chain.reverse()%>
   <% chain.forEach(function(block){ %>
-    <div class="block">
+    <div class="container block">
       <h3 class"label"> Index: <%= block.index %> </h1>
       <h5 class"label"> Time Created: <%=  moment(parseInt(block.timestamp)) %> </h5>
       <h5 class"label"> Details:  </h5>
