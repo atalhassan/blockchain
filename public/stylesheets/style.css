@@ -16,3 +16,6 @@ html {
 	color: white;
 	word-wrap: break-word;
 }
+.alert {
+	word-wrap: break-word;
+}
