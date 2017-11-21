@@ -14,8 +14,9 @@
   <%chain.reverse()%>
   <% chain.forEach(function(block){ %>
     <div class="container block">
-      <h3 class"label"> Index: <%= block.index %> </h1>
+      <h3 class"label"> Block: <%= block.index %> </h1>
       <h5 class"label"> Time Created: <%=  moment(parseInt(block.timestamp)) %> </h5>
+      <h5 class"label"> Nonce:  <%= block.salt%></h5>
       <h5 class"label"> Details:  </h5>
       <ul>
         <li> From: <%= block.data.from %></li>
