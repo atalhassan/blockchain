@@ -17,6 +17,9 @@ module.exports = class Block {
     return SHA256(this.index.toString() + this.timestamp.toString() + JSON.stringify(this.data) + this.prevHash + this.salt.toString()).toString();
   }
 
+  description() {
+    return (this.index.toString() + this.timestamp.toString() + JSON.stringify(this.data) + this.prevHash + this.salt.toString()).toString();
+  }
   hashed(){
     return (this.index.toString() + this.timestamp.toString() + JSON.stringify(this.data) + this.prevHash + this.salt.toString()).toString();
   }

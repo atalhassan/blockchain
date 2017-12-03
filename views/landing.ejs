@@ -7,7 +7,7 @@
       <span>This is a valid blockchain</span>
     </div>
   <%} else {%>
-    <div id='invalid'  class="alert alert-danger" role="alert">
+    <div id='valid'  class="alert alert-danger" role="alert">
       This is NOT a valid blockchain
     </div>
   <%}%>
@@ -55,11 +55,11 @@ $( "input" ).change(function() {
   // validator()
   // $('body').css('background', 'rgb(242,222,222)')
 
-
 })
 
 $('#validator').click(function () {
   validator()
+
 })
 
 function validator() {
@@ -86,7 +86,17 @@ function changeByid(blockchain, index, newValue, item) {
 }
 
 function isValid(blockchain){
+  if (blockchain.chain.length === 0) {
+    return true
+  }
+  var currBlock = new Block(blockchain.chain[0].index, blockchain.chain[0].timestamp, blockchain.chain[0].data, blockchain.chain[0].prevHash, blockchain.chain[0].hash, blockchain.chain[0].salt);
+  if(currBlock.hash !== currBlock.calculateHash()){
+    return false;
+  }
+  console.log(currBlock.description());
+
   for (var i = 1; i < blockchain.chain.length; i++) {
+
     var currBlock = new Block(blockchain.chain[i].index, blockchain.chain[i].timestamp, blockchain.chain[i].data, blockchain.chain[i].prevHash, blockchain.chain[i].hash, blockchain.chain[i].salt);
     var prevBlock = new Block(blockchain.chain[i-1].index, blockchain.chain[i-1].timestamp, blockchain.chain[i-1].data, blockchain.chain[i-1].prevHash, blockchain.chain[i-1].hash, blockchain.chain[i-1].salt);
     //case 1 check if currBlock is valid

@@ -63,7 +63,7 @@ function startMining() {
 $('#clac_hash').on('click', function(){
     var data = {message: $("#message").val(), to:$("#to").val(), from: $("#from").val()}
     newBlock = new Block(<%= newBlock.index %>, Date.now(), data);
-    newBlock.prevHash = <%- JSON.stringify(newBlock.hash)%>
+    newBlock.prevHash = <%- JSON.stringify(newBlock.prevHash)%>
     setInterval(startMining, 0);
 });
 </script>

@@ -22,16 +22,32 @@ module.exports = class Blockchain {
   }
 
   getLatestBlock() {
+    if (this.chain.length === 0) {
+      return 0
+    }
     return this.chain[this.chain.length - 1];
   }
 
   addBlock(newBlock) {
-    newBlock.prevHash = this.getLatestBlock().hash;
+    var lastBlock = this.getLatestBlock()
+    if (lastBlock === 0) {
+      newBlock.prevHash = newBlock.prevHash
+    } else {
+      newBlock.prevHash = this.getLatestBlock().hash;
+    }
+
     newBlock.startMining();
     this.chain.push(newBlock);
   }
 
   isValid(){
+    if (this.chain.length === 0) {
+      return true
+    }
+    var currBlock = this.chain[0];
+    if(currBlock.hash !== currBlock.calculateHash()){
+      return false;
+    }
     for (var i = 1; i < this.chain.length; i++) {
       var currBlock = this.chain[i];
       var prevBlock = this.chain[i-1];;

@@ -35,8 +35,12 @@ app.get("/", function(req, res) {
 
 app.get("/new", function(req, res) {
   var lastBlock = myChain.getLatestBlock();
-  var newBlock = new Block(lastBlock.index + 1, Date.now(), {}, lastBlock.hash);
+  var newBlock = new Block(0, Date.now(), {}, 0);
+  if (lastBlock !== 0) {
+      var newBlock = new Block(lastBlock.index + 1, Date.now(), {}, lastBlock.hash);
+  }
 
+  console.log(newBlock);
   res.render("new", {newBlock:newBlock, key: newBlock.key, length: newBlock.length});
 })
 
@@ -48,6 +52,7 @@ app.post("/new", function(req, res) {
     } else {
       myChain = new Blockchain(allBlocks);
       var lastBlock = myChain.getLatestBlock();
+
       var data = {message: req.body.message, to: req.body.to, from:req.body.from}
 
       var index = req.body.index;
@@ -56,18 +61,18 @@ app.post("/new", function(req, res) {
       var prevHash = req.body.prevHash
       var salt = req.body.salt
       var newBlock = new Block(index, timestamp, data, prevHash, hash, salt);
-      if(index  != (lastBlock.index + 1)) {
-        console.log(newBlock);
-        console.log(lastBlock);
-        res.send("Failed to add block, index not in order")
-        return
+      console.log(newBlock);
+      if (lastBlock !== 0) {
+        if(index  != (lastBlock.index + 1)) {
+          res.send("Failed to add block, index not in order")
+          return
+        }
       }
       if(hash !== newBlock.calculateHash()){
-        console.log(newBlock.hashed());
-        console.log(req.body.val);
         res.send("Failed to add block hash value not correct")
         return
       }
+
       myChain.addBlock(newBlock);
       if(!myChain.isValid()) {
         console.log(newBlock);
@@ -76,6 +81,7 @@ app.post("/new", function(req, res) {
         return
       }
 
+      console.log(newBlock);
       BlockModel.create(newBlock, function(err, newlyCreated){
         if(err){
           console.log(err);
