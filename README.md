@@ -14,7 +14,7 @@ node index.js
 ```
 and make sure that you run '''mongod''' on a different shell
 
-Then visit [localhost:3000](localhost:3000)
+Then visit [localhost:3000](https://localhost:3000)
 
 
 ## the blockchain algorithm
