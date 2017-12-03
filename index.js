@@ -6,8 +6,8 @@ bodyParser      = require("body-parser"),
 moment          = require('moment');
 
 
-const Blockchain = require("./blockchain.js");
-const Block = require("./block.js");
+const Blockchain = require("./blockchain_algorithm/blockchain.js");
+const Block = require("./blockchain_algorithm/block.js");
 
 var myChain = new Blockchain();
 
