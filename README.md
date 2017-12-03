@@ -1,12 +1,20 @@
 # Blockchain
 Simple blockchain algorithm
 
+## Framework
+- [express](https://expressjs.com)
+- ejs
+- mongodb
+
+
 ## To run
 ```
 npm install
 node index.js
 ```
-Then visit [localhost:3000]
+and make sure that you run  ``` mongod ``` on a different shell
+
+Then visit [localhost:3000](https://localhost:3000)
 
 
 ## the blockchain algorithm
