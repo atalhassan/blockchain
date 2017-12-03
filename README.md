@@ -12,7 +12,7 @@ Simple blockchain algorithm
 npm install
 node index.js
 ```
-and make sure that you run '''mongod''' on a different shell
+and make sure that you run  ``` mongod ``` on a different shell
 
 Then visit [localhost:3000](https://localhost:3000)
 
