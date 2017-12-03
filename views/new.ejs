@@ -1,5 +1,10 @@
 <% include partials/header %>
-
+<div class="container page-header">
+    <h1>Add a new block to the blockchain</h1>
+    <section>
+      The block you are adding will be Block <%=newBlock.index+1%>
+    </section>
+</div>
 <div class="container" >
   <form action="/new" method="POST" id="myForm">
     <div class="form-group">
@@ -40,7 +45,7 @@ var newBlock;
 $("#formSubmit").hide()
 function startMining() {
     newBlock.hash = newBlock.calculateHash()
-    $("#hash_alert").html("Mining hash (This may take a while): " + newBlock.hash)
+    $("#hash_alert").html("Mining hash (This will take less than a minute): " + newBlock.hash)
     if(newBlock.hash.substring(0,<%=length%>) !== <%-JSON.stringify(key)%>){
       $("#hash_alert").addClass("alert-warning")
       newBlock.salt++;
