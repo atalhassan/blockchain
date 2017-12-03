@@ -3,6 +3,13 @@ html {
 	position: relative;
     min-height: 100%;
 }
+body {
+	font-size: 16px;
+}
+section {
+	padding-left: 20px;
+	display:block;
+}
 
 .navbar-inverse {
 	margin-bottom: 30px;
@@ -18,4 +25,9 @@ html {
 }
 .alert {
 	word-wrap: break-word;
+}
+
+
+input {
+	display: flex;
 }

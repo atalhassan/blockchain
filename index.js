@@ -16,8 +16,11 @@ app.use(express.static(__dirname + "/public"));
 app.set("view engine", "ejs");
 
 
+const databaseurl = process.env.DATABASEURL || 'mongodb://localhost/mydb'
+const port = process.env.PORT || 3000
 
-mongoose.connect(process.env.DATABASEURL, {useMongoClient: true});
+
+mongoose.connect(databaseurl, {useMongoClient: true});
 
 app.get("/", function(req, res) {
   BlockModel.find({},function(err, allBlocks) {
@@ -25,7 +28,7 @@ app.get("/", function(req, res) {
       console.log(err);
     } else {
       myChain = new Blockchain(allBlocks);
-      res.render("landing" , {blockchain:myChain.chain, valid:myChain.isValid(), moment:moment})
+      res.render("landing" , {blockchain:myChain, valid:myChain.isValid(), moment:moment})
     }
   });
 })
@@ -87,6 +90,6 @@ app.post("/new", function(req, res) {
 // ===================
 // App listner
 // ===================
-app.listen(process.env.PORT,process.env.IP,function(){
+app.listen(port,process.env.IP,function(){
   console.log("Blockchian server is up...");
 });
